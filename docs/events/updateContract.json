@@ -1,0 +1,21 @@
+{ 
+    "resource": "/prd/v1/contracts/{contractId}",
+    "path": "/prd/v1/contracts/1b41b319-bdd9-4bc6-b444-3746838f8305",
+    "httpMethod": "PUT",
+    "headers": { 
+        "Accept": "*/*"
+    },
+    "pathParameters": { "contractId": "1b41b319-bdd9-4bc6-b444-3746838f8305" },
+    "stageVariables": false,
+    "requestContext": { 
+        "path": "/prd/v1/contracts/1b41b319-bdd9-4bc6-b444-3746838f8305",
+        "resourceId": "8zcf4i",
+        "stage": "dev",
+        "requestId": "2f973de3-4ae0-11e7-be01-5329afc91288",
+        "resourcePath": "/prd/v1/contracts/{contractId}",
+        "httpMethod": "PUT",
+        "apiId": "5bj82wcqrc"
+    },
+    "body": "{\"contract\":{}}",
+    "isBase64Encoded": false 
+}

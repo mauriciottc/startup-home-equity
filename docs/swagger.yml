@@ -1,0 +1,523 @@
+swagger: "2.0"
+info:
+  version: 1.0.1
+  title: startup-home-equity
+  description: 'home equity contract system controller'
+consumes:
+  - application/json
+produces:
+  - application/json
+host: "e59jt2xivc.execute-api.us-east-1.amazonaws.com"
+basePath: "/stg"
+schemes:
+- "https"
+
+definitions:
+# ENUMS
+  contractStatus:
+    type: string
+    enum: &CONTRACT_STATUS
+      - waiting_documents
+      - waiting_review
+      - approved
+      - denied
+
+# REQUEST/RESPONSE SCHEMAS
+  contractsListResponse:
+    required:
+      - contracts
+    properties:
+      contracts:
+        description: lista de contratos
+        type: array
+        items:
+          $ref: "#/definitions/contract"
+  contractGetResponse:
+    required:
+      - contract
+    properties:
+      contract:
+        $ref: "#/definitions/contract"
+  contractPostResponse:
+    required:
+      - contractId
+      - name
+      - email
+      - personalId
+      - loanValue
+    properties:
+      contractId:
+        type: string
+        description: uuid do contrato gerado ao enviar os dados
+      name:
+        type: string
+        description: nome do requerente do emprestimo
+      email:
+        type: string
+        description: email do requerente
+      personalId:
+        type: string
+        description: cpf do requerente
+      loanValue:
+        type: integer
+        description: valor do emprestimo
+      monthlyIncome:
+        type: integer
+        description: salario do requerente
+      birthDate:
+        type: string
+        description: data de nascimento do requerente
+      matrialStatus:
+        type: string
+        description: data de nascimento do requerente
+      address:
+        $ref: "#/definitions/address"
+      documents:
+        $ref: "#/definitions/documentUrlList"
+  ErrorResponse:
+    required:
+      - errMsg
+    properties:
+      errMsg:
+        type: string
+# Models 
+  contract:
+    required:
+      - name
+      - email
+      - personalId
+      - loanValue
+    properties:
+      name:
+        type: string
+        description: nome do requerente do emprestimo
+      email:
+        type: string
+        description: email do requerente
+      personalId:
+        type: string
+        description: cpf do requerente
+      loanValue:
+        type: integer
+        description: valor do emprestimo
+      monthlyIncome:
+        type: integer
+        description: salario do requerente
+      birthDate:
+        type: string
+        description: data de nascimento do requerente
+      matrialStatus:
+        type: string
+        description: data de nascimento do requerente
+      address:
+        $ref: "#/definitions/address"
+  address:
+    properties:
+      street:
+        type: string
+        description: nome da rua
+      number:
+        type: integer
+        description: numero da residencia
+      complement:
+        type: string
+        description: complemento
+      postalCode:
+        type: string
+        description: codigo postal do endereço
+      city:
+        type: string
+        description: cidade
+      state:
+        type: string
+        description: estado
+  documents:
+    description: lista de URL assinadas para upload de documentos
+    type: array
+    items:
+      $ref: "#/definitions/documentUrlList"
+  documentGetUrlList:
+    description: URL e metadados para upload
+    properties:
+      personalId:
+        description: URL para acesso a imagem do documento de identidade
+        type: string
+      addressProof:
+        description: URL para acesso a imagem do comprovante de residencia
+        type: string
+      residence:
+        description: URL para acesso a imagems da residencia
+        type: string
+  documentUrlList:
+    description: URL e metadados para upload
+    properties:
+      personalId:
+        description: documento de identidade
+        $ref: "#/definitions/documentUrl"
+      addressProof:
+        description: comprovante de residencia
+        $ref: "#/definitions/documentUrl"
+      residence:
+        description: URL para upload de imagem da residencia
+        $ref: "#/definitions/documentUrl"
+  documentUrl:
+    description: URL e metadados para upload
+    properties:
+      url:
+        type: string
+      fields:
+        properties:
+          Content-Type:
+            type: string
+          key:
+            type: string
+          bucket:
+            type: string
+          X-Amz-Algorithm:
+            type: string
+          X-Amz-Credential:
+            type: string
+          X-Amz-Date:
+            type: string
+          X-Amz-Security-Token:
+            type: string
+          Policy:
+            type: string
+          X-Amz-Signature:
+            type: string
+  
+tags:
+  - name: contracts
+    description: Operações relacionadas aos contratos
+  - name: documents
+    description: Operações relacionadas aos documentos
+paths:
+  /v1/contracts:
+    get:
+      summary: "lista todos os contratos de acordo com os filtros passados"
+      description: lista todos os contratos de acordo com os filtros passados.
+      tags:
+        - contracts
+      parameters:
+        - name: status
+          in: query
+          description: status do contrato na base de dados
+          required: false
+          type: string
+          enum: *CONTRACT_STATUS
+        - name: contractId
+          in: query
+          description: uuid do contrato gerado ao enviar os dados
+          required: false
+          type: string
+      responses:
+        200:
+          description: sucesso ao listar
+          schema:
+            $ref: "#/definitions/contractsListResponse"
+        default:
+          description: Erro ao 
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    post:
+      summary: "Cria um novo contrato"
+      description: Cria um novo contrato de acordo com os dados passados caso o personalId já não esteja cadastrado e em avaliação.
+      tags:
+        - contracts
+      parameters:
+        - name: contract
+          in: body
+          description: dados do contrato
+          required: false
+          schema:
+            properties:
+              contract:
+                $ref: "#/definitions/contract"
+      responses:
+        200:
+          description: Sucesso ao cadastrar
+          schema:
+            properties:
+              contract:
+                $ref: "#/definitions/contractPostResponse"
+        default:
+          description: Erro ao cadastrar
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    options:
+      tags:
+        - contracts
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Credentials:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
+  /v1/contracts/{contractId}:
+    get:
+      summary: "retorna os dados de um contrato especifico"
+      description: retorna os dados de um contrato especifico.
+      tags:
+        - contracts
+      parameters:
+        - name: contractId
+          in: path
+          description: uuid do contrato gerado ao enviar os dados
+          required: true
+          type: string
+      responses:
+        200:
+          description: sucesso ao listar
+          schema:
+            $ref: "#/definitions/contractGetResponse"
+        default:
+          description: Erro ao 
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    put:
+      summary: "atualiza os dados de um contrato especifico"
+      description: atualiza os dados de um contrato especifico.
+      tags:
+        - contracts
+      parameters:
+        - name: contractId
+          in: path
+          description: uuid do contrato gerado ao enviar os dados
+          required: true
+          type: string
+        - name: contract
+          in: body
+          description: dados do contrato para alteração
+          required: false
+          schema:
+            properties:
+              contract:
+                $ref: "#/definitions/contract"
+      responses:
+        200:
+          description: sucesso ao listar
+          schema:
+            $ref: "#/definitions/contractGetResponse"
+        default:
+          description: Erro ao 
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    options:
+      parameters:
+        - name: contractId
+          in: path
+          description: uuid do contrato gerado ao enviar os dados
+          required: true
+          type: string
+      tags:
+        - contracts
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Credentials:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
+  /v1/contracts/{contractId}/review:
+    put:
+      summary: "atualiza o status de um contrato especifico"
+      description: A função é utilizada apenas para aprovação de um contrato que está na fase de review.
+      tags:
+        - contracts
+      parameters:
+        - name: contractId
+          in: path
+          description: uuid do contrato gerado ao enviar os dados
+          required: true
+          type: string
+        - name: contract
+          in: body
+          description: dados do contrato para alteração
+          required: false
+          schema:
+            properties:
+              status:
+                type: string
+      responses:
+        200:
+          description: sucesso ao listar
+          schema:
+            $ref: "#/definitions/contractGetResponse"
+        default:
+          description: Erro ao 
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    options:
+      tags:
+        - contracts
+      parameters:
+        - name: contractId
+          in: path
+          description: uuid do contrato gerado ao enviar os dados
+          required: true
+          type: string
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Credentials:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
+  /v1/contracts/{contractId}/documents:
+    get:
+      summary: "retorna as URLs para vizualização dos documentos enviados"
+      description: retorna as URLs para vizualização dos documentos enviados para um contrato especifico, retorna as URLs escapadas.
+      tags:
+        - documents
+      parameters:
+        - name: contractId
+          in: path
+          description: uuid do contrato gerado ao enviar os dados
+          required: true
+          type: string
+      responses:
+        200:
+          description: sucesso ao listar
+          schema:
+            $ref: "#/definitions/documentGetUrlList"
+        default:
+          description: Erro ao 
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    options:
+      tags:
+        - documents
+      parameters:
+        - name: contractId
+          in: path
+          description: uuid do contrato gerado ao enviar os dados
+          required: true
+          type: string
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Credentials:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
+  /v1/contracts/{contractId}/documents/{documentType}:
+    get:
+      summary: "retorna a url de um documento de um contrato especifico"
+      description: retorna a url de um documento de um contrato especifico, retorna as URLs escapadas.
+      tags:
+        - documents
+      parameters:
+        - name: contractId
+          in: path
+          description: uuid do contrato gerado ao enviar os dados
+          required: true
+          type: string
+        - name: documentType
+          in: path
+          description: tipo do documento que deve ser buscado
+          required: true
+          type: string
+      responses:
+        200:
+          description: sucesso ao listar
+          schema:
+            properties:
+              documentType:
+                description: URL para acesso a imagems do documento escolhido
+                type: string
+        default:
+          description: Erro ao retornar documento
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    put:
+      summary: "retorna uma url e metadado para upload de um documento de um contrato especifico"
+      description: retorna uma url e metadado para upload de um documento de um contrato especifico.
+      tags:
+        - documents
+      parameters:
+        - name: contractId
+          in: path
+          description: uuid do contrato gerado ao enviar os dados
+          required: true
+          type: string
+        - name: documentType
+          in: path
+          description: tipo do documento que deve ser buscado
+          required: true
+          type: string
+      responses:
+        200:
+          description: sucesso ao listar
+          schema:
+            $ref: "#/definitions/documentUrl"
+        default:
+          description: Erro ao retornar documento
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    options:
+      tags:
+        - documents
+      parameters:
+        - name: contractId
+          in: path
+          description: uuid do contrato gerado ao enviar os dados
+          required: true
+          type: string
+        - name: documentType
+          in: path
+          description: tipo do documento que deve ser buscado
+          required: true
+          type: string
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Credentials:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"

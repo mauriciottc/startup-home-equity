@@ -1,0 +1,23 @@
+{ 
+    "resource": "/prd/v1/contracts/{contractId}/documents",
+    "path": "/prd/v1/contracts/2b5f645f-fbbe-4070-ae9a-ded4ad61ab1c/documents",
+    "httpMethod": "GET",
+    "headers": { 
+        "Accept": "*/*"
+    },
+    "pathParameters": { 
+        "contractId": "2b5f645f-fbbe-4070-ae9a-ded4ad61ab1c"
+    },
+    "stageVariables": false,
+    "requestContext": { 
+        "path": "/prd/v1/contracts/2b5f645f-fbbe-4070-ae9a-ded4ad61ab1c/documents",
+        "resourceId": "8zcf4i",
+        "stage": "dev",
+        "requestId": "2f973de3-4ae0-11e7-be01-5329afc91288",
+        "resourcePath": "/prd/v1/contracts/{contractId}/documents",
+        "httpMethod": "GET",
+        "apiId": "5bj82wcqrc"
+    },
+    "body": "{\"login\":\"jean.silva\",\"pwd\":\"123456\"}",
+    "isBase64Encoded": false 
+}

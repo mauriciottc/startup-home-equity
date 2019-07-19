@@ -1,0 +1,38 @@
+{
+    "Records": [
+        {
+            "eventVersion": "2.1",
+            "eventSource": "aws:s3",
+            "awsRegion": "us-east-1",
+            "eventTime": "2019-05-27T12:09:22.066Z",
+            "eventName": "ObjectCreated:Put",
+            "userIdentity": {
+                "principalId": "A2EYRSDXYL16N1"
+            },
+            "requestParameters": {
+                "sourceIPAddress": "189.34.224.99"
+            },
+            "responseElements": {
+                "x-amz-request-id": "93CF82E9CDB3D651",
+                "x-amz-id-2": "LI1oUMtDL9jBgbWACaKQgksyL4xzVBhOcinz2m1v3VLBqPzVMV2lEj6jR+2dgFat5sbZF1q34DU="
+            },
+            "s3": {
+                "s3SchemaVersion": "1.0",
+                "configurationId": "7cb56446-8537-428e-abe5-8b339b7c06ea",
+                "bucket": {
+                    "name": "contract-register-stg-document",
+                    "ownerIdentity": {
+                        "principalId": "A2EYRSDXYL16N1"
+                    },
+                    "arn": "arn:aws:s3:::contract-register-stg-document"
+                },
+                "object": {
+                    "key": "0e51f5e2-e558-46a2-9cad-9019c1ab69e4/residence/abc123",
+                    "size": 101515,
+                    "eTag": "d1bfb1b3a4ca89c12b2c84fbe85ae207",
+                    "sequencer": "005CEBD372013B221A"
+                }
+            }
+        }
+    ]
+}

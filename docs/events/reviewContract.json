@@ -1,0 +1,21 @@
+{ 
+    "resource": "/prd/v1/contracts/{contractId}/review",
+    "path": "/prd/v1/contracts/f36c045f-1230-4440-bfae-89dc21efa4d6/review",
+    "httpMethod": "PUT",
+    "headers": { 
+        "Accept": "*/*"
+    },
+    "pathParameters": { "contractId": "f36c045f-1230-4440-bfae-89dc21efa4d6" },
+    "stageVariables": false,
+    "requestContext": { 
+        "path": "/prd/v1/contracts/f36c045f-1230-4440-bfae-89dc21efa4d6/review",
+        "resourceId": "8zcf4i",
+        "stage": "dev",
+        "requestId": "2f973de3-4ae0-11e7-be01-5329afc91288",
+        "resourcePath": "/prd/v1/contracts/{contractId}/review",
+        "httpMethod": "PUT",
+        "apiId": "5bj82wcqrc"
+    },
+    "body": "{\"status\":\"approved\"}",
+    "isBase64Encoded": false 
+}

@@ -1,0 +1,25 @@
+
+{ 
+    "resource": "/prd/v1/contracts/{contractId}/documents/personalId",
+    "path": "/prd/v1/contracts/00eaca60-cf5e-4c3a-aa67-6b797387b7b2",
+    "httpMethod": "PUT",
+    "headers": { 
+        "Accept": "*/*"
+    },
+    "pathParameters": {
+        "contractId": "00eaca60-cf5e-4c3a-aa67-6b797387b7b2",
+        "documentType": "personalId"
+    },
+    "stageVariables": false,
+    "requestContext": {
+        "path": "/prd/v1/contracts/00eaca60-cf5e-4c3a-aa67-6b797387b7b2",
+        "resourceId": "8zcf4i",
+        "stage": "dev",
+        "requestId": "2f973de3-4ae0-11e7-be01-5329afc91288",
+        "resourcePath": "/prd/v1/contracts/{contractId}",
+        "httpMethod": "PUT",
+        "apiId": "5bj82wcqrc"
+    },
+    "body": "{\"name\":\"minha_foto_show.jpeg\"}",
+    "isBase64Encoded": false
+}

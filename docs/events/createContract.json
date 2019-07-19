@@ -1,0 +1,21 @@
+{ 
+    "resource": "/prd/v1/contracts",
+    "path": "/prd/v1/contracts",
+    "httpMethod": "POST",
+    "headers": { 
+        "Accept": "*/*"
+    },
+    "pathParameters": {},
+    "stageVariables": false,
+    "requestContext": { 
+        "path": "/prd/v1/contracts",
+        "resourceId": "8zcf4i",
+        "stage": "dev",
+        "requestId": "2f973de3-4ae0-11e7-be01-5329afc91288",
+        "resourcePath": "/prd/v1/contracts",
+        "httpMethod": "POST",
+        "apiId": "5bj82wcqrc"
+    },
+    "body": "{\"contract\":{\"personalId\":\"126.011.360-49\",\"name\":\"marcelo agnaldo pereira\",\"email\":\"marcelo@ig.com.br\",\"loanValue\":10000,\"monthlyIncome\":5000,\"birthDate\":\"1987-02-03\",\"matrialStatus\":\"married\",\"address\":{\"street\":\"R. João Cachoeira\",\"number\":\"1405\",\"complement\":\"apyo 117\",\"postalCode\":\"04535-015\",\"city\":\"São Paulo\",\"state\":\"SP\"}}}",
+    "isBase64Encoded": false 
+}

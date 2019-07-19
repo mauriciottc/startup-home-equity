@@ -1,0 +1,26 @@
+{
+  "name": "startup-home-equity",
+  "version": "1.0.0",
+  "description": "",
+  "main": "",
+  "repository": {
+    "type": "git",
+    "url": "https://bitbucket.org/mauriciotetech/startup-home-equity/src"
+  },
+  "scripts": {
+
+  },
+  "dependencies": {
+    "aws-sdk": "^2.463.0",
+    "jsonschema": "^1.2.4",
+    "node-uuid": "^1.4.8",
+    "serverless-plugin-stage-variables": "^1.9.2",
+    "squel": "^5.12.2"
+  },
+  "author": "@mauriciottc",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.1.4"
+  }
+}

@@ -1,0 +1,30 @@
+image:
+  name: mauriciotch/serverless:latest
+  username: $MY_DOCKER_HUB_USERNAME
+  password: $MY_DOCKER_HUB_PASSWORD
+  email: $MY_DOCKER_HUB_EMAIL
+
+pipelines:
+  branches:
+    dev:
+      - step:
+          script:
+            - npm install
+            - sls config credentials --stage dev --overwrite --provider aws --key $MY_AWS_KEY --secret $MY_AWS_SECRET
+            - sls deploy --stage dev
+
+    staging:
+      - step:
+          script:
+            - npm install --save-dev
+            - sls config credentials --stage staging --overwrite --provider aws --key $MY_AWS_KEY --secret $MY_AWS_SECRET
+            - ./node_modules/.bin/mocha test/contract.js
+            - ./node_modules/.bin/mocha test/document.js
+            - sls deploy --stage staging
+
+    master:
+      - step:
+          script:
+            - npm install
+            - sls config credentials --stage prod --overwrite --provider aws --key $MY_AWS_KEY --secret $MY_AWS_SECRET
+            - sls deploy --stage prod
