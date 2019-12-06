@@ -76,3 +76,20 @@ sls invoke local -f listDocuments -p docs/events/listDocument.json -s stg
 ### Documentação Swagger
 
 Os endpoints estão documentados no swaggerHub https://app.swaggerhub.com/apis/mauriciottc/startup-home-equity/1.0.1
+
+
+
+sequenceDiagram
+  participant C as Client
+  participant R as λ transaction_graphQL
+  participant D as ElastonSearch
+
+  C->>R: GET /bank-accounts
+  activate R
+    R->>D: send search
+    activate D
+      D-->>R: return search result
+    deactivate D
+
+    R-->>C: Return 200 search
+  deactivate R
